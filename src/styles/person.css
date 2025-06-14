@@ -1,0 +1,19 @@
+.msg-area {
+	gap: 30px;
+	align-items: flex-start;	
+}
+
+.persons {
+	
+}
+
+
+
+.contacts {
+	background-color: coral;
+	flex-direction: column;
+}
+
+.message_box {
+	height: 150px;
+}
