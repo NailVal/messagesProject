@@ -1,21 +1,19 @@
 import '../styles/messagebox.css'
 import { useState, useEffect } from 'react'
 
-function MessageBox({ handleMessages, messagesActive }) {
+function MessageBox({ handleMessages, getInput }) {
 
-	const [msg, setMsg] = useState()
+  const [msg, setMsg] = useState('')
   const [msgArr, setMsgArr] = useState([])
-//  const [displayMessages, setDisplayMessages] = useState([])
-
-  function handleInput(val) {
-    setMsgArr(msgArr => [...msgArr, val])
-    setMsg('')
-  }
 
   useEffect(() => {
-    console.log(msgArr)
     handleMessages(msgArr)
   }, [msgArr])
+
+  function handleInput(val) {
+      setMsgArr(msgArr => [...msgArr, val])
+      setMsg('')
+  }
 
 	return (
 		    <div className="area flex">
