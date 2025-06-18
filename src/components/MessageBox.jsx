@@ -1,10 +1,11 @@
 import '../styles/messagebox.css'
 import { useState, useEffect } from 'react'
 
-function MessageBox({ handleMessages }) {
+function MessageBox({ handleMessages, messagesActive }) {
 
 	const [msg, setMsg] = useState()
   const [msgArr, setMsgArr] = useState([])
+//  const [displayMessages, setDisplayMessages] = useState([])
 
   function handleInput(val) {
     setMsgArr(msgArr => [...msgArr, val])
@@ -12,6 +13,7 @@ function MessageBox({ handleMessages }) {
   }
 
   useEffect(() => {
+    console.log(msgArr)
     handleMessages(msgArr)
   }, [msgArr])
 
@@ -24,7 +26,7 @@ function MessageBox({ handleMessages }) {
               <div class="message_input flex">
                 <div class="btn-anchor">
                   <textarea onChange={(e) => setMsg(e.target.value)} name="" id="" value={msg} placeholder="Message Person #1"></textarea>
-                  <button onClick={() => handleInput(msg)}>></button>
+                  <button onClick={() => handleInput(msg)}>&gt;</button>
                 </div>
               </div>
             </div>

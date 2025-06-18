@@ -22,12 +22,14 @@ function App() {
 
   const [messages, setMessages] = useState({})
 
+  
   const addMessages = (id) => (msg) => {
     setMessages(messages => (
       {...messages, [id]: [msg]}
       ))
   }  
-      
+  
+ 
 
   return (
     <>
@@ -46,7 +48,7 @@ function App() {
           </div>
           <div className="message_area">
             {initialPeople.map((person, index) => {
-              return person.id == activeId ? <MessageBox key={index} handleMessages={addMessages(person.id)} /> : ''
+              return person.id == activeId ? <MessageBox key={index} handleMessages={addMessages(person.id)} messagesActive={messages[person.id] || []} /> : ''
               })}
           </div>
         </div>
