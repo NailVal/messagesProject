@@ -1,12 +1,14 @@
 .area {
 	flex-direction: column;
 	height: 100%;
+	border: 3px dotted purple;
 }
 
 .message_box {
 	flex-grow: 1;
-	border: 1px dotted black;
+	background-color: lightcoral;
 	justify-content: flex-end;
+	overflow-y: auto;
 }
 
 .message_input {
@@ -16,24 +18,36 @@
 }
 
 .divMsg {
-	flex-direction: column;
 	align-items: flex-end;
+	flex-direction: column;
 	gap: 20px;
+	border: 1px solid black;
+	width: 100%;
 }
 
 .divMsgContent {
-	border: 1px solid black;
-	margin-right: 50px;
-	width: min-content;
-	max-width: 300px;
-	background-color: coral;
+	border: 1px dotted black;
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.divMsgContent p {
+	overflow-wrap: break-word;
+	border: 3px solid black;
+	background-color: white;
 	border-radius: 16px;
 	padding: 5px 15px;
 	font-size: 20px;
 	line-height: 1.5;
 	text-align: right;
+	max-width: 500px;
 }
 
-.divMsgContent p {
-	overflow-wrap: break-word;
+.left_msg {
+	flex-direction: column;
+}
+
+.left_msg p {
+	text-align: left;
 }

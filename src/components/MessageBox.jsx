@@ -1,30 +1,33 @@
 import '../styles/messagebox.css'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 
-function MessageBox({ handleMessages, getInput }) {
+function MessageBox({ handleMessages, messages }) {
 
   const [msg, setMsg] = useState('')
-  const [msgArr, setMsgArr] = useState([])
-
-  useEffect(() => {
-    handleMessages(msgArr)
-  }, [msgArr])
-
-  function handleInput(val) {
-      setMsgArr(msgArr => [...msgArr, val])
-      setMsg('')
-  }
 
 	return (
 		    <div className="area flex">
               <div class="message_box flex">
                 <div className="divMsg flex">
-                </div>
+                  {messages && messages.msgArr ? messages.msgArr.map((message, index) => (
+                    <div className="divMsgContent" key={index}>
+                      <p>{message}</p>
+                    </div>    
+                  )) : ''}
+                  {messages && messages.resArr ? messages.resArr.map((res, index) => (
+                    <div className="divMsgContent left_msg" key={index}>
+                      <p>{res}</p>
+                    </div> 
+                  )) : ''}              
+              </div>
               </div>
               <div class="message_input flex">
                 <div class="btn-anchor">
                   <textarea onChange={(e) => setMsg(e.target.value)} name="" id="" value={msg} placeholder="Message Person #1"></textarea>
-                  <button onClick={() => handleInput(msg)}>&gt;</button>
+                  <button onClick={() => {
+                    setMsg('')
+                    handleMessages(msg)
+                    }}>&gt;</button>
                 </div>
               </div>
             </div>

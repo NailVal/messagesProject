@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, createContext, useContext } from 'react'
 import Person from './components/Person'
 import './styles/app.css'
 import MessageBox from './components/MessageBox'
@@ -22,10 +22,33 @@ function App() {
 
   const [messages, setMessages] = useState({})
 
-  const addMessages = (id) => (msg) => {
-    setMessages(messages => (
-      {...messages, [id]: msg}
-    ))
+  const addMessages = (id) => async (msg) => {
+
+    try {
+      const response = await fetch('http://localhost:3000/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ msg: msg })
+      })
+      const data = await response.json()
+
+      setMessages(messages => {
+        const currentMessagesForId = messages[id] || { msgArr: [], resArr: [] };
+        const currentMessage = currentMessagesForId.msgArr || []
+        const currentResponse = currentMessagesForId.resArr || []
+        return {
+          ...messages, [id]: {
+            msgArr: [...currentMessage, msg],
+            resArr: [...currentResponse, data.res] 
+          } 
+        }
+      })
+    }
+    catch(error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -50,12 +73,12 @@ function App() {
           </div>
           <div className="message_area">
             {initialPeople.map((person, index) => {
-              return person.id == activeId ? 
-              <MessageBox 
-                key={index} 
-                handleMessages={addMessages(person.id)} 
-                 /> : null
+              return person.id == activeId ? (
+                  <MessageBox key={index} activeId={person.id} handleMessages={addMessages(person.id)} messages={messages[Number(activeId)]} />
+              ) : null
               })}
+          </div>
+          <div>
           </div>
         </div>
         {console.log(messages)}     
