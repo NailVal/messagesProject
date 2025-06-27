@@ -19,13 +19,14 @@ function App() {
 
   const [initialPeople, setInitialPeople] = useState(initial_people)
   const [activeId, setActiveId] = useState(1)
+  const [currMsg, setCurrMsg] = useState({})
 
   const [messages, setMessages] = useState({})
 
   const addMessages = (id) => async (msg) => {
 
     try {
-      const response = await fetch('http://localhost:3000/chat', {
+      const response = await fetch('/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -33,6 +34,22 @@ function App() {
         body: JSON.stringify({ msg: msg })
       })
       const data = await response.json()
+
+      setCurrMsg(currMsg => {
+
+        const updatedCurrMsg = { ...currMsg }
+        const dontKnow = updatedCurrMsg[id] ? [...updatedCurrMsg[id]] : []
+
+        dontKnow.push({
+          msg: msg,
+          res: data.res
+        });
+
+
+        return {
+          ...updatedCurrMsg, [id]: dontKnow
+        }
+      })
 
       setMessages(messages => {
         const currentMessagesForId = messages[id] || { msgArr: [], resArr: [] };
@@ -74,7 +91,13 @@ function App() {
           <div className="message_area">
             {initialPeople.map((person, index) => {
               return person.id == activeId ? (
-                  <MessageBox key={index} activeId={person.id} handleMessages={addMessages(person.id)} messages={messages[Number(activeId)]} />
+                  <MessageBox 
+                    key={index} 
+                    activeId={person.id} 
+                    handleMessages={addMessages(person.id)} 
+                    messages={messages[Number(activeId)]}
+                    currMsg={currMsg[Number(activeId)]} 
+                    />
               ) : null
               })}
           </div>

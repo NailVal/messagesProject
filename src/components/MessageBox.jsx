@@ -1,9 +1,10 @@
 import '../styles/messagebox.css'
 import { useState, useEffect, useContext } from 'react'
 
-function MessageBox({ handleMessages, messages }) {
+function MessageBox({ handleMessages, messages, currMsg }) {
 
   const [msg, setMsg] = useState('')
+  console.log(currMsg[0])
 
 	return (
 		    <div className="area flex">
