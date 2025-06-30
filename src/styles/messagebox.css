@@ -28,8 +28,9 @@
 .divMsgContent {
 	border: 1px dotted black;
 	width: 100%;
-	display: flex;
-	justify-content: flex-end;
+	display: flex;	
+	flex-direction: column;
+	align-items: flex-end;
 }
 
 .divMsgContent p {
@@ -44,10 +45,6 @@
 	max-width: 500px;
 }
 
-.left_msg {
-	flex-direction: column;
-}
-
-.left_msg p {
-	text-align: left;
+.left {
+	align-self: flex-start;
 }

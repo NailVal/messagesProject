@@ -1,24 +1,26 @@
 import '../styles/messagebox.css'
 import { useState, useEffect, useContext } from 'react'
 
-function MessageBox({ handleMessages, messages, currMsg }) {
+function MessageBox({ handleMessages, currMsg }) {
 
   const [msg, setMsg] = useState('')
-  console.log(currMsg[0])
+  console.log(currMsg)
+
+  function handleButton() {
+    if (msg.length !== 0) {
+      handleMessages(msg)
+    }
+  }
 
 	return (
 		    <div className="area flex">
               <div class="message_box flex">
                 <div className="divMsg flex">
-                  {messages && messages.msgArr ? messages.msgArr.map((message, index) => (
+                  {currMsg ? currMsg.map((obj, index) => (
                     <div className="divMsgContent" key={index}>
-                      <p>{message}</p>
+                      <p>{obj.msg}</p>
+                      <p className="left">{obj.res}</p>
                     </div>    
-                  )) : ''}
-                  {messages && messages.resArr ? messages.resArr.map((res, index) => (
-                    <div className="divMsgContent left_msg" key={index}>
-                      <p>{res}</p>
-                    </div> 
                   )) : ''}              
               </div>
               </div>
@@ -27,7 +29,7 @@ function MessageBox({ handleMessages, messages, currMsg }) {
                   <textarea onChange={(e) => setMsg(e.target.value)} name="" id="" value={msg} placeholder="Message Person #1"></textarea>
                   <button onClick={() => {
                     setMsg('')
-                    handleMessages(msg)
+                    handleButton()
                     }}>&gt;</button>
                 </div>
               </div>

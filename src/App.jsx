@@ -21,8 +21,6 @@ function App() {
   const [activeId, setActiveId] = useState(1)
   const [currMsg, setCurrMsg] = useState({})
 
-  const [messages, setMessages] = useState({})
-
   const addMessages = (id) => async (msg) => {
 
     try {
@@ -45,21 +43,8 @@ function App() {
           res: data.res
         });
 
-
         return {
           ...updatedCurrMsg, [id]: dontKnow
-        }
-      })
-
-      setMessages(messages => {
-        const currentMessagesForId = messages[id] || { msgArr: [], resArr: [] };
-        const currentMessage = currentMessagesForId.msgArr || []
-        const currentResponse = currentMessagesForId.resArr || []
-        return {
-          ...messages, [id]: {
-            msgArr: [...currentMessage, msg],
-            resArr: [...currentResponse, data.res] 
-          } 
         }
       })
     }
@@ -95,7 +80,6 @@ function App() {
                     key={index} 
                     activeId={person.id} 
                     handleMessages={addMessages(person.id)} 
-                    messages={messages[Number(activeId)]}
                     currMsg={currMsg[Number(activeId)]} 
                     />
               ) : null
@@ -103,8 +87,7 @@ function App() {
           </div>
           <div>
           </div>
-        </div>
-        {console.log(messages)}     
+        </div>   
       </div>
     </>
   )
